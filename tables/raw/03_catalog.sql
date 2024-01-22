@@ -1,5 +1,4 @@
-
-CREATE TABLE IF NOT EXISTS eservice
+CREATE TABLE IF NOT EXISTS domains.eservice
 (
   id CHAR(36) PRIMARY KEY,
   producer_id CHAR(36) NOT NULL REFERENCES tenant (id)
@@ -7,12 +6,12 @@ CREATE TABLE IF NOT EXISTS eservice
   description VARCHAR(4096) NOT NULL,
   technology VARCHAR(32) NOT NULL,
   mode VARCHAR(32) NOT NULL,
-  created_at TIMESTAMP NOT NULL,
+  created_at TIMESTAMP NOT NULL
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
-CREATE TABLE IF NOT EXISTS eservice_descriptor
+CREATE TABLE IF NOT EXISTS domains.eservice_descriptor
 (
   id CHAR(36) PRIMARY KEY,
   description VARCHAR(4096) NULL,
@@ -44,7 +43,7 @@ BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
 
-CREATE TABLE IF NOT EXISTS eservice_descriptor_attribute_group
+CREATE TABLE IF NOT EXISTS domains.eservice_descriptor_attribute_group
 (
   group_id SMALLINT NOT NULL, -- This is the index of the group in the array taken from the event (is the i of eservice.descriptor.attribute.certified[i])
   attribute_id CHAR(36) NOT NULL REFERENCES attribute (id),
@@ -54,7 +53,7 @@ CREATE TABLE IF NOT EXISTS eservice_descriptor_attribute_group
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
-CREATE TABLE IF NOT EXISTS eservice_descriptor_attribute_group_assignment
+CREATE TABLE IF NOT EXISTS domains.eservice_descriptor_attribute_group_assignment
 (
   eservice_descriptor_id CHAR(36) NOT NULL REFERENCES eservice_descriptor (id),
   group_id SMALLINT NOT NULL REFERENCES eservice_descriptor_attribute_group (group_id),
@@ -64,7 +63,7 @@ BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
 
-CREATE TABLE IF NOT EXISTS eservice_descriptor_document
+CREATE TABLE IF NOT EXISTS domains.eservice_descriptor_document
 (
   id CHAR(36) PRIMARY KEY,
   name VARCHAR(1024) NOT NULL,
@@ -72,7 +71,7 @@ CREATE TABLE IF NOT EXISTS eservice_descriptor_document
   pretty_name VARCHAR(1024) NOT NULL,
   path VARCHAR(1024) NOT NULL,
   checksum VARCHAR(1024) NOT NULL,
-  upload_date TIMESTAMP NOT NULL
+  upload_date TIMESTAMP NOT NULL,
 
   eservice_descriptor_id CHAR(36) NOT NULL REFERENCES eservice_descriptor (id)
 )
@@ -80,33 +79,33 @@ BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
 
-CREATE TABLE IF NOT EXISTS eservice_risk_analysis_form_single_answer
+CREATE TABLE IF NOT EXISTS domains.eservice_risk_analysis_form_single_answer
 (
   id CHAR(36) PRIMARY KEY,
   key VARCHAR(1024) NOT NULL,
-  value VARCHAR(16384) NULL,
+  value VARCHAR(16384) NULL
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
-CREATE TABLE IF NOT EXISTS eservice_risk_analysis_form_multi_answer
+CREATE TABLE IF NOT EXISTS domains.eservice_risk_analysis_form_multi_answer
 (
   id CHAR(36) PRIMARY KEY,
   key VARCHAR(1024) NOT NULL,
-  values VARCHAR(16384) NOT NULL, -- It contains a json array
+  values VARCHAR(16384) NOT NULL -- It contains a json array
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
-CREATE TABLE IF NOT EXISTS eservice_risk_analysis_form
+CREATE TABLE IF NOT EXISTS domains.eservice_risk_analysis_form
 (
   id CHAR(36) PRIMARY KEY,
-  version VARCHAR(10) NOT NULL,
+  version VARCHAR(10) NOT NULL
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
-CREATE TABLE IF NOT EXISTS eservice_risk_analysis
+CREATE TABLE IF NOT EXISTS domains.eservice_risk_analysis
 (
   id CHAR(36) PRIMARY KEY,
   name VARCHAR(1024) NOT NULL,
