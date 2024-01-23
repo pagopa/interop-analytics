@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS domains.eservice
 (
   id CHAR(36) PRIMARY KEY,
-  producer_id CHAR(36) NOT NULL REFERENCES tenant (id)
+  producer_id CHAR(36) NOT NULL REFERENCES tenant (id),
   name VARCHAR(1024) NOT NULL,
   description VARCHAR(4096) NOT NULL,
   technology VARCHAR(32) NOT NULL,
@@ -77,7 +77,6 @@ CREATE TABLE IF NOT EXISTS domains.eservice_descriptor_document
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
-
 
 CREATE TABLE IF NOT EXISTS domains.eservice_risk_analysis_form_single_answer
 (
