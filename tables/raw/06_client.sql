@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS domains.client_user
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
--- Related objects states (eserviuce, agreement, purpose) has been omitted because not relevant in this context
+-- Related objects states (eservice, agreement, purpose) has been omitted because not relevant in this context
 CREATE TABLE IF NOT EXISTS domains.client_purpose
 (
   client_id CHAR(36) NOT NULL REFERENCES domains.client (id),
