@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS domains.agreement
 (
   id CHAR(36) PRIMARY KEY,
-  eservice_id CHAR(36) NOT NULL REFERENCES eservice (id),
-  descriptor_id CHAR(36) NOT NULL REFERENCES eservice_descriptor (id),
-  producer_id CHAR(36) NOT NULL REFERENCES tenant (id),
-  consumer_id CHAR(36) NOT NULL REFERENCES tenant (id),
+  eservice_id CHAR(36) NOT NULL REFERENCES domains.eservice (id),
+  descriptor_id CHAR(36) NOT NULL REFERENCES domains.eservice_descriptor (id),
+  producer_id CHAR(36) NOT NULL REFERENCES domains.tenant (id),
+  consumer_id CHAR(36) NOT NULL REFERENCES domains.tenant (id),
   state VARCHAR(50) NOT NULL,
   suspended_by_consumer BOOLEAN NULL,
   suspended_by_producer BOOLEAN NULL,
@@ -15,12 +15,12 @@ CREATE TABLE IF NOT EXISTS domains.agreement
   rejection_reason VARCHAR(20000) NULL,
   suspended_at TIMESTAMP NULL,
 
-  contract_id CHAR(36) PRIMARY KEY,
-  contract_name VARCHAR(1024) NOT NULL,
-  contract_pretty_name VARCHAR(1024) NOT NULL,
-  contract_content_type VARCHAR(1024) NOT NULL,
-  contract_path VARCHAR(1024) NOT NULL,
-  contract_created_at TIMESTAMP NOT NULL,
+  contract_id CHAR(36) NULL,
+  contract_name VARCHAR(1024) NULL,
+  contract_pretty_name VARCHAR(1024) NULL,
+  contract_content_type VARCHAR(1024) NULL,
+  contract_path VARCHAR(1024) NULL,
+  contract_created_at TIMESTAMP NULL,
 
   submission_who CHAR(36) NULL,
   submission_when TIMESTAMP NULL,
@@ -49,15 +49,15 @@ CREATE TABLE IF NOT EXISTS domains.agreement_consumer_document
   path VARCHAR(1024) NOT NULL,
   created_at TIMESTAMP NOT NULL,
 
-  agreement_id CHAR(36) NOT NULL REFERENCES agreement (id)
+  agreement_id CHAR(36) NOT NULL REFERENCES domains.agreement (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
 CREATE TABLE IF NOT EXISTS domains.agreement_attribute
 (
-  agreement_id CHAR(36) NOT NULL REFERENCES agreement (id),
-  attribute_id CHAR(36) NOT NULL REFERENCES attribute (id),
+  agreement_id CHAR(36) NOT NULL REFERENCES domains.agreement (id),
+  attribute_id CHAR(36) NOT NULL REFERENCES domains.attribute (id),
   attribute_type VARCHAR(32) NOT NULL -- certified, declared or verified
 )
 BACKUP NO

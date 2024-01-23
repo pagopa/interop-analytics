@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS domains.tenant_mail
   description VARCHAR(512) NULL,
   created_at TIMESTAMP NOT NULL,
 
-  tenant_id CHAR(36) NOT NULL REFERENCES tenant (id)
+  tenant_id CHAR(36) NOT NULL REFERENCES domains.tenant (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS domains.tenant_certified_attribute
   assignment_timestamp TIMESTAMP NOT NULL,
   revocation_timestamp TIMESTAMP NULL,
 
-  tenant_id CHAR(36) NOT NULL REFERENCES tenant (id)
+  tenant_id CHAR(36) NOT NULL REFERENCES domains.tenant (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS domains.tenant_declared_attribute
   assignment_timestamp TIMESTAMP NOT NULL,
   revocation_timestamp TIMESTAMP NULL,
 
-  tenant_id CHAR(36) NOT NULL REFERENCES tenant (id)
+  tenant_id CHAR(36) NOT NULL REFERENCES domains.tenant (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS domains.tenant_verified_attribute
   assignment_timestamp TIMESTAMP NOT NULL,
   revocation_timestamp TIMESTAMP NULL,
 
-  tenant_id CHAR(36) NOT NULL REFERENCES tenant (id)
+  tenant_id CHAR(36) NOT NULL REFERENCES domains.tenant (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS domains.tenant_verified_attribute_vierifier
   expiration_date TIMESTAMP NULL,
   extension_date TIMESTAMP NULL,
 
-  tenant_id CHAR(36) NOT NULL REFERENCES tenant (id)
+  tenant_id CHAR(36) NOT NULL REFERENCES domains.tenant (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS domains.tenant_verified_attribute_revoker
   extension_date TIMESTAMP NULL,
   revokation_date TIMESTAMP NOT NULL,
 
-  tenant_id CHAR(36) NOT NULL REFERENCES tenant (id)
+  tenant_id CHAR(36) NOT NULL REFERENCES domains.tenant (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;

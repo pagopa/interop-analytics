@@ -3,13 +3,13 @@ CREATE TABLE IF NOT EXISTS domains.generated_jwt
   jwt_id CHAR(36) PRIMARY KEY,
   correlation_id VARCHAR NULL,
   issued_at TIMESTAMP NOT NULL,
-  client_id CHAR(36) NOT NULL REFERENCES client (id)
-  organization_id CHAR(36) NOT NULL REFERENCES tenant (id)
-  agreement_id CHAR(36) NOT NULL REFERENCES agreement (id)
-  eservice_id CHAR(36) NOT NULL REFERENCES eservice (id)
-  descriptor_id CHAR(36) NOT NULL REFERENCES eservice_descriptor (id)
-  purpose_id CHAR(36) NOT NULL REFERENCES purpose (id)
-  purpose_version_id CHAR(36) NOT NULL REFERENCES purpose_version (id)
+  client_id CHAR(36) NOT NULL REFERENCES domains.client (id),
+  organization_id CHAR(36) NOT NULL REFERENCES domains.tenant (id),
+  agreement_id CHAR(36) NOT NULL REFERENCES domains.agreement (id),
+  eservice_id CHAR(36) NOT NULL REFERENCES domains.eservice (id),
+  descriptor_id CHAR(36) NOT NULL REFERENCES domains.eservice_descriptor (id),
+  purpose_id CHAR(36) NOT NULL REFERENCES domains.purpose (id),
+  purpose_version_id CHAR(36) NOT NULL REFERENCES domains.purpose_version (id),
   algorithm VARCHAR(10) NOT NULL,
   key_id VARCHAR(50) NOT NULL,
   audience VARCHAR(1024) NOT NULL,

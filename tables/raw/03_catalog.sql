@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS domains.eservice
 (
   id CHAR(36) PRIMARY KEY,
-  producer_id CHAR(36) NOT NULL REFERENCES tenant (id),
+  producer_id CHAR(36) NOT NULL REFERENCES domains.tenant (id),
   name VARCHAR(1024) NOT NULL,
   description VARCHAR(4096) NOT NULL,
   technology VARCHAR(32) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS domains.eservice_descriptor
   interface_pretty_name VARCHAR(1024) NULL,
   interface_path VARCHAR(1024) NULL,
   interface_checksum VARCHAR(1024) NULL,
-  interface_upload_date TIMESTAMP NULL
+  interface_upload_date TIMESTAMP NULL,
 
   state VARCHAR(50) NOT NULL,
   audience VARCHAR(4096) NOT NULL, -- It contains a json array
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS domains.eservice_descriptor
   deprecated_at TIMESTAMP NULL,
   archived_at TIMESTAMP NULL,
 
-  eservice_id CHAR(36) NOT NULL REFERENCES eservice (id)
+  eservice_id CHAR(36) NOT NULL REFERENCES domains.eservice (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -46,7 +46,7 @@ DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 CREATE TABLE IF NOT EXISTS domains.eservice_descriptor_attribute_group
 (
   group_id SMALLINT NOT NULL, -- This is the index of the group in the array taken from the event (is the i of eservice.descriptor.attribute.certified[i])
-  attribute_id CHAR(36) NOT NULL REFERENCES attribute (id),
+  attribute_id CHAR(36) NOT NULL REFERENCES domains.attribute (id),
   explicitAttributeVerification BOOLEAN NOT NULL,
   PRIMARY KEY (group_id, attribute_id) 
 )
@@ -55,9 +55,11 @@ DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
 
 CREATE TABLE IF NOT EXISTS domains.eservice_descriptor_attribute_group_assignment
 (
-  eservice_descriptor_id CHAR(36) NOT NULL REFERENCES eservice_descriptor (id),
-  group_id SMALLINT NOT NULL REFERENCES eservice_descriptor_attribute_group (group_id),
-  attribute_type VARCHAR(32) NOT NULL -- certified, declared or verified
+  eservice_descriptor_id CHAR(36) NOT NULL REFERENCES domains.eservice_descriptor (id),
+  group_id SMALLINT NOT NULL, -- This should reference domains.eservice_descriptor_attribute_group (group_id), but that column cannot have a unique constraint
+  attribute_type VARCHAR(32) NOT NULL, -- certified, declared or verified
+
+  PRIMARY KEY (eservice_descriptor_id, group_id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -73,7 +75,7 @@ CREATE TABLE IF NOT EXISTS domains.eservice_descriptor_document
   checksum VARCHAR(1024) NOT NULL,
   upload_date TIMESTAMP NOT NULL,
 
-  eservice_descriptor_id CHAR(36) NOT NULL REFERENCES eservice_descriptor (id)
+  eservice_descriptor_id CHAR(36) NOT NULL REFERENCES domains.eservice_descriptor (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -108,10 +110,10 @@ CREATE TABLE IF NOT EXISTS domains.eservice_risk_analysis
 (
   id CHAR(36) PRIMARY KEY,
   name VARCHAR(1024) NOT NULL,
-  risk_analysis_form_id CHAR(36) NOT NULL REFERENCES eservice_risk_analysis_form (id),
+  risk_analysis_form_id CHAR(36) NOT NULL REFERENCES domains.eservice_risk_analysis_form (id),
   created_at TIMESTAMP NOT NULL,
 
-  eservice_descriptor_id CHAR(36) NOT NULL REFERENCES eservice_descriptor (id)
+  eservice_descriptor_id CHAR(36) NOT NULL REFERENCES domains.eservice_descriptor (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;

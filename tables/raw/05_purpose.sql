@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS domains.purpose
 (
   id CHAR(36) PRIMARY KEY,
-  eservice_id CHAR(36) NOT NULL REFERENCES eservice (id),
-  consumer_id CHAR(36) NOT NULL REFERENCES tenant (id),
+  eservice_id CHAR(36) NOT NULL REFERENCES domains.eservice (id),
+  consumer_id CHAR(36) NOT NULL REFERENCES domains.tenant (id),
   suspended_by_consumer TIMESTAMP NULL,
   suspended_by_producer TIMESTAMP NULL,
   title VARCHAR(1024) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS domains.purpose_version
   first_activation_at TIMESTAMP NULL,
   suspended_at TIMESTAMP NULL,
 
-  purpose_id CHAR(36) NOT NULL REFERENCES purpose (id)
+  purpose_id CHAR(36) NOT NULL REFERENCES domains.purpose (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
@@ -67,10 +67,10 @@ CREATE TABLE IF NOT EXISTS domains.purpose_risk_analysis
 (
   id CHAR(36) PRIMARY KEY,
   name VARCHAR(1024) NOT NULL,
-  risk_analysis_form_id CHAR(36) NOT NULL REFERENCES purpose_risk_analysis_form (id),
+  risk_analysis_form_id CHAR(36) NOT NULL REFERENCES domains.purpose_risk_analysis_form (id),
   created_at TIMESTAMP NOT NULL,
 
-  purpose_id CHAR(36) NOT NULL REFERENCES purpose (id)
+  purpose_id CHAR(36) NOT NULL REFERENCES domains.purpose (id)
 )
 BACKUP NO
 DISTSTYLE AUTO SORTKEY AUTO ENCODE AUTO;
